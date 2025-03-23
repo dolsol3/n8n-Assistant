@@ -58,7 +58,10 @@ This project uses the `n8n-asistans` MCP server. The server is started with the 
                 "/n8n-assistant",
                 "run",
                 "main.py"
-            ]
+            ],
+            "env":{
+                "SERPER_API_KEY": "*********"
+            }
         }
     }
 }
