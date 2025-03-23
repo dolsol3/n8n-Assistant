@@ -55,7 +55,7 @@ This project uses the `n8n-asistans` MCP server. The server is started with the 
             "command": "uv",
             "args": [
                 "--directory",
-                "/Users/onurpolat/Docs/AI-Projeler/mcp-example",
+                "/n8n-assistant",
                 "run",
                 "main.py"
             ]
