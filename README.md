@@ -1,4 +1,5 @@
 # n8n Assistant
+[![smithery badge](https://smithery.ai/badge/@onurpolat05/n8n-assistant)](https://smithery.ai/server/@onurpolat05/n8n-assistant)
 
 This project contains a Multi-Channel Platform (MCP) server used to create an assistant integrated with n8n. The assistant can be used to search for n8n documentation, example workflows, and community forums.
 
@@ -17,6 +18,15 @@ This project contains a Multi-Channel Platform (MCP) server used to create an as
 
 ## Installation
 
+### Installing via Smithery
+
+To install n8n-assistant for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@onurpolat05/n8n-assistant):
+
+```bash
+npx -y @smithery/cli install @onurpolat05/n8n-assistant --client claude
+```
+
+### Manual Installation
 1. Clone this repository:
    ```bash
    git clone <repository-url>
