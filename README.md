@@ -3,6 +3,10 @@
 
 This project contains a Multi-Channel Platform (MCP) server used to create an assistant integrated with n8n. The assistant can be used to search for n8n documentation, example workflows, and community forums.
 
+<a href="https://glama.ai/mcp/servers/@onurpolat05/n8n-Assistant">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@onurpolat05/n8n-Assistant/badge" alt="n8n-asistans MCP server" />
+</a>
+
 ## Features
 
 - **Web Search**: Searches n8n documentation, workflows, and community forums based on a specific query.
