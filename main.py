@@ -9,7 +9,7 @@ load_dotenv()
 mcp = FastMCP("n8n-Assistant")
 
 USER_AGENT = "n8n-assistant/1.0"
-SERPER_URL="https://google.serper.dev/search"
+BRAVE_SEARCH_URL = "https://api.search.brave.com/res/v1/web/search"
 
 n8n_urls = {
     "docs": "docs.n8n.io",
@@ -18,24 +18,28 @@ n8n_urls = {
 }
 
 async def search_web(query: str) -> dict | None:
-    payload = json.dumps({"q": query, "num": 5})
-
     headers = {
-        "X-API-KEY": os.getenv("SERPER_API_KEY"),
-        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Accept-Encoding": "gzip",
+        "X-Subscription-Token": os.getenv("BRAVE_API_KEY")
+    }
+
+    params = {
+        "q": query,
+        "count": 5
     }
 
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.post(
-                SERPER_URL, headers=headers, data=payload, timeout=30.0
+            response = await client.get(
+                BRAVE_SEARCH_URL, headers=headers, params=params, timeout=30.0
             )
             response.raise_for_status()
             return response.json()
         except httpx.TimeoutException:
-            return {"organic": []}
+            return {"web": {"results": []}}
         except Exception as e:
-            return {"organic": [], "error": str(e)}
+            return {"web": {"results": []}, "error": str(e)}
   
 async def fetch_url(url: str):
   async with httpx.AsyncClient() as client:
@@ -98,17 +102,17 @@ async def get_n8n_info(query: str, resource_type: str):
   query = f"site:{n8n_urls[resource_type]} {search_query}"
   results = await search_web(query)
   
-  if not results or "organic" not in results or len(results["organic"]) == 0:
+  if not results or "web" not in results or len(results["web"]["results"]) == 0:
     return f"No results found for '{search_query}' in {resource_type}"
   
   # Get content from the top results
   content_list = []
-  for i, result in enumerate(results["organic"]):
-    if "link" not in result:
+  for i, item in enumerate(results["web"]["results"]):
+    if "url" not in item:
       continue
       
-    source_url = result["link"]
-    title = result.get("title", "No title")
+    source_url = item["url"]
+    title = item.get("title", "No title")
     content = await fetch_url(source_url)
     
     if content and not content.startswith("Error") and not content.startswith("Timeout"):

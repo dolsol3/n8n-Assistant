@@ -6,11 +6,12 @@ startCommand:
     # JSON Schema defining the configuration options for the MCP.
     type: object
     required:
-      - serperApiKey
+      - braveApiKey
     properties:
-      serperApiKey:
+      braveApiKey:
         type: string
-        description: API key for SERPER service used to perform web search
+        description: API key for Brave Search API
+        required: true
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
@@ -18,8 +19,8 @@ startCommand:
       command: 'python',
       args: ['main.py'],
       env: {
-        SERPER_API_KEY: config.serperApiKey
+        BRAVE_API_KEY: config.braveApiKey
       }
     })
   exampleConfig:
-    serperApiKey: your_dummy_serper_api_key
+    braveApiKey: your_dummy_brave_api_key
